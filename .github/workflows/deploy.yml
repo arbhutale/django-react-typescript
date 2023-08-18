@@ -14,28 +14,9 @@ on:
   pull_request:
 permissions: write-all
 jobs:
-  # Run tests.
-  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  # build-frontend:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [12.x]
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #     - run: cd frontend && npm ci
-  #     - run: cd frontend && npm run check --if-present
-  #     - run: cd frontend && npm run test:static --if-present
-  #     - run: cd frontend && npm test --if-present
-  #     - run: cd frontend && npm run build --if-present
 
   build-django:
     runs-on: ubuntu-latest
-    # needs: build-frontend
     strategy:
       max-parallel: 4
       matrix:
@@ -65,22 +46,6 @@ jobs:
         run: |
           python manage.py test
 
-  # test-image:
-  #   runs-on: ubuntu-latest
-  #   needs: build-django
-  #   env:
-  #     SECRET_KEY: ${{ secrets.SECRET_KEY }}
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Run tests
-  #       run: |
-  #         if [ -f docker-compose.test.yml ]; then
-  #           docker-compose --file docker-compose.test.yml build
-  #           docker-compose --file docker-compose.test.yml run sut
-  #         else
-  #           docker build . --build-arg AUTH_TOKEN=${{ secrets.AUTH_KEY }} --build-arg GTAG_ID=${{ secrets.GTAG_ID }} --build-arg ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} --file Dockerfile
-  #         fi
-
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push-image-to-registry:
@@ -94,10 +59,6 @@ jobs:
         run: docker build . --build-arg AUTH_TOKEN=${{ secrets.AUTH_KEY }} --build-arg GTAG_ID=${{ secrets.GTAG_ID }} --build-arg ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} --file Dockerfile --tag ${{ secrets.IMAGE_NAME }}
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-     #  - name: Log into registry1
-     #     docker login ghcr.io -u tech1arb -p ${{ secrets.AUTH_KEY }}
-      # - name: Log in to GitHub Packages
-       #  run: echo ${PERSONAL_ACCESS_TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Push image
@@ -135,8 +96,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          #password: ${{ secrets.SSH_PASSWORD }}
-          #port: 22
           source: "docker-compose.yml"
           target: "image"
 
