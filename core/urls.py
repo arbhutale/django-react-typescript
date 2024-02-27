@@ -34,7 +34,7 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {
         'document_root': MEDIA_ROOT,
     }),
+    re_path(r'^', include('frontend.urls')),
     path('', TemplateView.as_view(template_name='index.html'))
-    re_path(r'^', include('frontend.urls'
-    )),
+    
 ]
