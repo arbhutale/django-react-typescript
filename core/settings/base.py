@@ -115,6 +115,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ORIGIN_WHITELIST = [
+    'https://example.com',
+    'https://www.example.com',
+    'http://146.190.13.3/'
+]
 
 ROOT_URLCONF = 'core.urls'
 
