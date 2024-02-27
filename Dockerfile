@@ -8,7 +8,7 @@ ENV AUTH_TOKEN $AUTH_TOKEN
 ENV NODE_ENV production
 ADD ./frontend/ /usr/src/app/frontend/
 RUN cd frontend \
-    && npm install \
+    && npm ci \
     && npm run build
 
 # Build Django
