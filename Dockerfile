@@ -1,5 +1,5 @@
 # Build frontend
-FROM node:12
+FROM node:16
 WORKDIR /usr/src/app
 ARG GTAG_ID
 ENV GTAG_ID $GTAG_ID
@@ -8,7 +8,7 @@ ENV AUTH_TOKEN $AUTH_TOKEN
 ENV NODE_ENV production
 ADD ./frontend/ /usr/src/app/frontend/
 RUN cd frontend \
-    && echo $'NODE_ENV=production\nAUTH_TOKEN='$AUTH_TOKEN'\nGTAG_ID='$GTAG_ID > .env \
+    && echo $'NODE_ENV=production\nAUTH_TOKEN='$AUTH_TOKEN'\nGTAG_ID='$GTAG_ID >> .env \
     && npm run build
 
 # Build Django
