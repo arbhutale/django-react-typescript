@@ -1,0 +1,11 @@
+.app-container {
+    min-height: 350px;
+}
+.width30{
+    width: 30%;
+}
+
+.table{
+    --bs-table-color: white !important;
+    --bs-table-striped-color: white !important;
+}

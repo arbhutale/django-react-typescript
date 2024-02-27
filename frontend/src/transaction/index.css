@@ -1,0 +1,13 @@
+select {
+    /*webkit browsers */
+    -webkit-appearance: none;
+    /*Firefox */
+    -moz-appearance: none;
+    /* modern browsers */
+    appearance: none;
+    border-radius: 0;
+  
+  }
+.modal{
+    display: block;
+  }

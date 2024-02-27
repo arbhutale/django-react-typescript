@@ -1,0 +1,35 @@
+{% extends 'admin/change_form.html' %}
+
+{% block content %}
+  {{ block.super }}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    (function($) {
+        $(document).ready(function() {
+            var transactionMethodField = "#id_transaction_method";
+            var transactionSourceField = "#id_transaction_source";
+
+            $(transactionMethodField).change(function() {
+                var selectedMethod = $(this).val();
+                var transactionSourceFieldOptions = $(transactionSourceField + " option");
+
+                $(transactionSourceFieldOptions).slice(1).remove();
+
+                $.ajax({
+                    url: '/get_transaction_sources/',  // Replace with your endpoint URL
+                    method: 'GET',
+                    data: { method: selectedMethod },
+                    success: function(response) {
+                        $.each(response.sources, function(key, value) {
+                            $(transactionSourceField).append($('<option></option>').attr('value', value.id).text(value.name));
+                        });
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(errmsg);  // Handle errors
+                    }
+                });
+            });
+        });
+    })(django.jQuery);
+  </script>
+{% endblock %}
