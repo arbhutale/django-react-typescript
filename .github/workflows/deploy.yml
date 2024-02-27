@@ -106,6 +106,8 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
+          echo IMAGE_NAME=$IMAGE_NAME
+          echo $IMAGE_ID:$VERSION
 
           docker tag ${{ secrets.IMAGE_NAME }} $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
