@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     restart: always
-    image: docker.pkg.github.com/arbhutale/django-react-typescript/django-react-typescript
+    image: 2ec3d598e425
     expose:
       - "80"
     ports:
