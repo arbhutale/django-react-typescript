@@ -1,5 +1,5 @@
 # Build frontend
-FROM node:16
+FROM node:12.22.9
 WORKDIR /usr/src/app
 ARG GTAG_ID
 ENV GTAG_ID $GTAG_ID
