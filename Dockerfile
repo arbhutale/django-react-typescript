@@ -10,7 +10,7 @@ ADD ./frontend/ /usr/src/app/frontend/
 RUN cd frontend \
     && npm ci \
     && echo $'NODE_ENV=production\nAUTH_TOKEN='$AUTH_TOKEN'\nGTAG_ID='$GTAG_ID >> .env \
-    && npm run build
+    && CI='' npm run build
 
 # Build Django
 FROM python:3.8-slim-buster
