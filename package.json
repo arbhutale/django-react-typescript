@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/marcelovicentegc/django-react-typescript#readme",
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "concurrently": "^5.2.0"
   }
 }
