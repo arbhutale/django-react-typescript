@@ -118,7 +118,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'https://example.com',
     'https://www.example.com',
-    'http://146.190.13.3/'
+    'http://146.190.13.3/',
 ]
 
 ROOT_URLCONF = 'core.urls'
