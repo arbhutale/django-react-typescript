@@ -1,9 +1,9 @@
 import os
 
-AH = os.environ.get('ALLOWED_HOSTS')
+# AH = os.environ.get('ALLOWED_HOSTS')
 
-if AH:
-    ALLOWED_HOSTS = AH.split(' ')
+# if AH:
+#     ALLOWED_HOSTS = AH.split(' ')
 
 DEBUG = False
 

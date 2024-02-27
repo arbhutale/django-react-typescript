@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     restart: always
-    image: 2ec3d598e425
+    image: 6ddc7df5d8ca
     expose:
       - "80"
     ports:
