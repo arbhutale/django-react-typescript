@@ -60,7 +60,7 @@ async function handleResponse(response) {
             // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
             const logout = () => store.dispatch(authActions.logout());
             logout();
-            window.location.href = '/login'; 
+            window.location.href = '/account/login'; 
         }
 
         // get error message from body or default to response status

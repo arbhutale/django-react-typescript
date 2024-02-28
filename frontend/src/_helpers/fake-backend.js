@@ -110,7 +110,7 @@ function fakeBackend() {
             }
 
             function unauthorized() {
-                window.location.href = '/login'; 
+                window.location.href = '/account/login'; 
                 resolve({ status: 401, ...headers(), json: () => Promise.resolve({ message: 'Unauthorized' }) })
             }
 

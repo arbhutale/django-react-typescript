@@ -1,15 +1,31 @@
 version: "3"
 
 services:
+
+  pgadmin:
+    container_name: docker_django_pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "5050:80"
+    # networks:
+    #   - postgres
+    depends_on:
+      - postgres_db
+
   web:
     restart: always
-    image: 6ddc7df5d8ca
+    image: 0bd5d2d23ed1
     expose:
       - "80"
     ports:
       - "80:80"
     links:
-      - postgres:postgres
+      - postgres_db:postgres_db
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DB_HOST: ${DB_HOST}
@@ -22,22 +38,30 @@ services:
       CDN_API_SECRET: ${CDN_API_SECRET}
       SMTP_HOST_USER: ${SMTP_HOST_USER}
       SMTP_HOST_PASSWORD: ${SMTP_HOST_PASSWORD}
+    # networks:
+    #   - postgres
     depends_on:
-      - postgres
+      - postgres_db
       - memcached
     command: sh -c "python manage.py migrate && python manage.py collectstatic --no-input && python manage.py clearcache && gunicorn core.wsgi -b 0.0.0.0:80"
 
-  postgres:
+  postgres_db:
     restart: always
     image: postgres:latest
     environment:
+      POSTGRES_HOST_AUTH_METHOD: md5
       POSTGRES_USER: ${DB_USER}
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
+      
     ports:
       - "5432:5432"
+    
+    expose:
+      - "5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data/
+      - database-data:/var/lib/postgresql/data/
 
   memcached:
     restart: always
@@ -45,5 +69,10 @@ services:
     ports:
       - "11211:11211"
 
+# networks:
+#   postgres:
+#     driver: bridge
+
 volumes:
-  pgdata:
+  database-data:
+  pgadmin:

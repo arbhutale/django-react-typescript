@@ -14,7 +14,7 @@ import os
 
 PRODUCTION_MODE = (os.getenv('MODE') == 'production')
 
-ALLOWED_HOSTS = ['http://localhost', 'http://146.190.13.3/', 'http://localhost/']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 CSRF_COOKIE_SECURE = False
 AUTH_USER_MODEL = "users.CustomUser"
 CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
@@ -24,8 +24,9 @@ CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://146.190.113.62', 'http:/
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 if (PRODUCTION_MODE):
@@ -69,6 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'django.contrib.sites',
     'corsheaders',
     'rest_framework',
@@ -123,7 +125,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/build')
+            os.path.join(os.path.dirname(BASE_DIR), 'frontend/build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -158,7 +160,17 @@ else:
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
             'HOST': DB_HOST,
-            'PORT': '5432',
+            # 'PORT': '5432',
+            # 'NAME': 'aluxmadq',
+            # 'USER': 'aluxmadq',
+            # 'PASSWORD': 'tszRA7jrY1Oy5n1egvzkCXcCgoR7DSSl',
+            # 'HOST': 'satao.db.elephantsql.com',
+            # 'PORT': '5432',
+            # 'NAME': 'personal',
+            # 'USER': 'postgres',
+            # 'PASSWORD': 'docker',
+            # 'HOST': 'host.docker.internal',
+            'PORT': DB_PORT,
         }
     }
 
@@ -200,13 +212,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_FILES = [
-    os.path.join(BASE_DIR, 'frontend/build/static')
+    os.path.join( os.path.join(os.path.dirname(BASE_DIR)), 'frontend/build/static')
 ]
-
+BASE_DIR1 = '/usr/src/app/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR1, 'frontend', 'build', 'static'),  # Adjust as needed
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 
 # Cloudinary
 # https://cloudinary.com/documentation/django_integration
@@ -233,3 +253,14 @@ EMAIL_HOST_PASSWORD = os.environ.get('SMTP_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}

@@ -74,7 +74,7 @@ function createExtraActions() {
                 dispatch(authActions.setAuth(null));
                 localStorage.removeItem('auth');
                 localStorage.removeItem('user');
-                 window.location.href = '/login'; 
+                 window.location.href = '/account/login'; 
             }
         );
     }
