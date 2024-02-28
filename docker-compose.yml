@@ -19,7 +19,8 @@ services:
 
   web:
     restart: always
-    image: 0bd5d2d23ed1
+    # image: 0bd5d2d23ed1
+    image: docker.pkg.github.com/arbhutale/django-react-typescript/django-react-typescript:latest
     expose:
       - "80"
     ports:

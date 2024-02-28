@@ -109,8 +109,8 @@ jobs:
           echo IMAGE_NAME=$IMAGE_NAME
           echo $IMAGE_ID:$VERSION
 
-          docker tag ${{ secrets.IMAGE_NAME }} $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          docker tag ${{ secrets.IMAGE_NAME }} $IMAGE_ID:latest
+          docker push $IMAGE_ID:latest
 
   deploy:
     needs: push-image-to-registry
