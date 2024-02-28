@@ -17,7 +17,7 @@ PRODUCTION_MODE = (os.getenv('MODE') == 'production')
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '146.190.13.3', 'http://146.190.13.3/']
 CSRF_COOKIE_SECURE = False
 AUTH_USER_MODEL = "users.CustomUser"
-CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
+CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', '146.190.13.3', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
 
 # Django Rest Framework
 # https://www.django-rest-framework.org/
