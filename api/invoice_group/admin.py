@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import InvoiceOption, InvoiceCategory
+from .models import Option, Category
 
 class OptionAdmin(admin.ModelAdmin):
     list_display = ('name', 'option_name', 'order', 'category')
@@ -8,7 +8,7 @@ class OptionAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         # Check if the combination of order and category is unique
-        if InvoiceOption.objects.filter(order=obj.order, category=obj.category).exclude(pk=obj.pk).exists():
+        if Option.objects.filter(order=obj.order, category=obj.category).exclude(pk=obj.pk).exists():
             # Display an error message in the admin interface
             self.message_user(request, "This combination of order and category already exists.", level='ERROR')
         else:
@@ -18,5 +18,5 @@ class OptionAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
-admin.site.register(InvoiceCategory, CategoryAdmin)
-admin.site.register(InvoiceOption, OptionAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Option, OptionAdmin)

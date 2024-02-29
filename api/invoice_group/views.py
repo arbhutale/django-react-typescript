@@ -1,17 +1,17 @@
 # views.py
 from rest_framework import generics, status
 from rest_framework.response import Response
-from .models import InvoiceCategory, InvoiceOption
+from .models import Category, Option
 from .serializers import InvoiceCategorySerializer, InvoiceSelectionSerializer
 
 class CategoryListCreateView(generics.ListCreateAPIView):
-    # queryset = Category.objects.all()
+    queryset = Category.objects.all()
     serializer_class = InvoiceCategorySerializer
 
-    def get_queryset(self):
-        return  InvoiceCategory.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     return  Category.objects.filter(user=self.request.user)
 class SelectionListCreateView(generics.ListCreateAPIView):
-    queryset = InvoiceOption.objects.all()
+    queryset = Option.objects.all()
     serializer_class = InvoiceSelectionSerializer
 
     def post(self, request, *args, **kwargs):
@@ -21,12 +21,12 @@ class SelectionListCreateView(generics.ListCreateAPIView):
         
         # Get the category object
         try:
-            category = InvoiceCategory.objects.get(id=category_id)
-        except InvoiceCategory.DoesNotExist:
+            category = Category.objects.get(id=category_id)
+        except Category.DoesNotExist:
             return Response({'error': 'Category not found'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Get the last option in the category and calculate the next order value
-        last_option = InvoiceOption.objects.filter(category=category).order_by('-order').first()
+        last_option = Option.objects.filter(category=category).order_by('-order').first()
         next_order = last_option.order + 1 if last_option else 1
 
         # Prepare the data to pass to the serializer
@@ -51,4 +51,4 @@ class OrderByCategoryAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         category_id = self.kwargs['category_id']
-        return InvoiceOption.objects.filter(category__id=category_id, user=self.request.user)
+        return Option.objects.filter(category__id=category_id, user=self.request.user)

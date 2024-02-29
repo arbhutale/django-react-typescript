@@ -332,9 +332,9 @@ const AddEdit = () => {
         <br />
         <div className="row ">
           <div className='table-responsive-sm'>
-          { !invoiceData.value? <div class="spinner-border text-warning" role="status">
+          { invoiceData !==null &&  !invoiceData?.value? (<div class="spinner-border text-warning" role="status">
                 <span class="visually-hidden">Loading...</span>
-              </div>:
+              </div>):(
             <table className="table table-striped">
               <thead>
                 <tr>
@@ -379,7 +379,7 @@ const AddEdit = () => {
               </tbody>
                 
                 
-            </table>
+            </table>)
           }
           </div>
         </div>
