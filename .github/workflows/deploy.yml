@@ -145,6 +145,9 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
           script: |
+            docker rm -vf $(docker ps -aq)
+            docker rmi -f $(docker images -aq)
+            docker system prune -af
             docker login -u arbhutale -p ${{ secrets.DEPLOY_TOKEN }} docker.pkg.github.com
             cd image
             docker-compose pull
