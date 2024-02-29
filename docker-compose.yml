@@ -57,12 +57,14 @@ services:
   
   pgadmin:
     container_name: docker_django_pgadmin_container
-    image: dpage/pgadmin4
+    image: elestio/pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
       - PGADMIN_DEFAULT_PASSWORD=admin
     volumes:
       - pgadmin:/root/.pgadmin
+      - ./servers.json:/pgadmin4/servers.json
+        
     ports:
       - "5050:80"
     expose:
