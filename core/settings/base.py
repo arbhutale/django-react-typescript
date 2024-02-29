@@ -14,7 +14,7 @@ import os
 
 PRODUCTION_MODE = (os.getenv('MODE') == 'production')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '146.190.13.3', 'http://146.190.13.3/', 'http://24.144.92.69/', 'http://24.144.92.69:80', '24.144.92.69', '24.144.92.69:80']
+ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://24.144.92.69/', 'http://24.144.92.69:80', 'http://24.144.92.69', '24.144.92.69', '24.144.92.69:80', '146.190.13.3', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
 CSRF_COOKIE_SECURE = False
 AUTH_USER_MODEL = "users.CustomUser"
 CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://24.144.92.69/', 'http://24.144.92.69:80', '24.144.92.69', '24.144.92.69:80', '146.190.13.3', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
