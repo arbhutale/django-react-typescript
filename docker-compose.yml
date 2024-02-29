@@ -5,7 +5,7 @@ services:
   web:
     restart: always
     # image: e8da978d1f97
-    image: FROM ghcr.io/arbhutale/django-react-typescript/django-react-typescript:latestt
+    image: ghcr.io/arbhutale/django-react-typescript/django-react-typescript:latest
     expose:
       - "80"
     ports:
@@ -69,7 +69,7 @@ services:
       - "5050"
     # networks:
     #   - postgres
-    depends_on:
+    depends_on
       - postgres_db
 
 # networks:
