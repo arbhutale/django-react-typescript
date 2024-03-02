@@ -145,7 +145,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           # port: 22
-           port: ${{secrets.SSH_PORT}}
+          port: ${{secrets.SSH_PORT}}
           script: |
             docker rm -vf $(docker ps -aq)
             docker rmi -f $(docker images -aq)
