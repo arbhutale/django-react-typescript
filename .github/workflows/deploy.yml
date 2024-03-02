@@ -4,7 +4,7 @@ on:
   push:
     # Publish `prd` as Docker `latest` image.
     branches:
-      - feature/123
+      - feature/master
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -74,43 +74,43 @@ jobs:
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
-  # push-image-to-registry:
-  #   # Ensure test job passes before pushing image.
-  #   permissions:
-  #     contents: read
-  #     packages: write
-  #   needs: test-image
-  #   runs-on: ubuntu-latest
-  #   # if: github.event_name == 'push'
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Build image
-  #       run: docker build . --build-arg AUTH_TOKEN=${{ secrets.AUTH_KEY }} --build-arg GTAG_ID=${{ secrets.GTAG_ID }} --build-arg ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} --file Dockerfile --tag ${{ secrets.IMAGE_NAME }}
-  #     - name: Log into registry
-  #       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-  #     - name: Push image
-  #       run: |
-  #         IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/${{ secrets.IMAGE_NAME }}
+  push-image-to-registry:
+    # Ensure test job passes before pushing image.
+    permissions:
+      contents: read
+      packages: write
+    needs: test-image
+    runs-on: ubuntu-latest
+    # if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image
+        run: docker build . --build-arg AUTH_TOKEN=${{ secrets.AUTH_KEY }} --build-arg GTAG_ID=${{ secrets.GTAG_ID }} --build-arg ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} --file Dockerfile --tag ${{ secrets.IMAGE_NAME }}
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Push image
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/${{ secrets.IMAGE_NAME }}
 
-  #         # Change all uppercase to lowercase
-  #         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-  #         # Strip git ref prefix from version
-  #         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-  #         # Strip "v" prefix from tag name
-  #         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-  #         # Use Docker `latest` tag convention
-  #         [ "$VERSION" == "master" ] && VERSION=latest
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
 
-  #         echo IMAGE_ID=$IMAGE_ID
-  #         echo VERSION=$VERSION
-  #         echo IMAGE_NAME=$IMAGE_NAME
-  #         echo $IMAGE_ID:$VERSION
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          echo IMAGE_NAME=$IMAGE_NAME
+          echo $IMAGE_ID:$VERSION
 
-  #         docker tag ${{ secrets.IMAGE_NAME }} $IMAGE_ID:latest
-  #         docker push $IMAGE_ID:latest
+          docker tag ${{ secrets.IMAGE_NAME }} $IMAGE_ID:latest
+          docker push $IMAGE_ID:latest
 
   deploy:
     needs: push-image-to-registry
