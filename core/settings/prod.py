@@ -16,6 +16,7 @@ CSRF_TRUSTED_ORIGINS = ['http://103.235.106.28/', 'http://24.144.92.69/', 'http:
 
 # Sentry 
 
+
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
