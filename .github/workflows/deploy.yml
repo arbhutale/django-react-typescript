@@ -123,7 +123,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
+          port: ${{secrets.SSH_PORT}}
+          # port: 22
           source: "docker-compose.yml"
           target: "image"
 
@@ -143,7 +144,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
+          # port: 22
+           port: ${{secrets.SSH_PORT}}
           script: |
             docker rm -vf $(docker ps -aq)
             docker rmi -f $(docker images -aq)
