@@ -14,10 +14,10 @@ import os
 
 PRODUCTION_MODE = (os.getenv('MODE') == 'production')
 
-ALLOWED_HOSTS = CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://24.144.92.69/', 'http://24.144.92.69:80', 'http://24.144.92.69', '24.144.92.69', '24.144.92.69:80', '146.190.13.3', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
+ALLOWED_HOSTS = ['*']
 CSRF_COOKIE_SECURE = False
 AUTH_USER_MODEL = "users.CustomUser"
-CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://24.144.92.69/', 'http://24.144.92.69:80', '24.144.92.69', '24.144.92.69:80', '146.190.13.3', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
+CSRF_TRUSTED_ORIGINS = ['http://103.135.106.28/', 'http://24.144.92.69/', 'http://24.144.92.69:80', '24.144.92.69', '24.144.92.69:80', '103.135.106.28', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
 
 # Django Rest Framework
 # https://www.django-rest-framework.org/
@@ -156,21 +156,21 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': DB_NAME,
-            'USER': DB_USER,
-            'PASSWORD': DB_PASSWORD,
-            'HOST': DB_HOST,
+            # 'NAME': DB_NAME,
+            # 'USER': DB_USER,
+            # 'PASSWORD': DB_PASSWORD,
+            # 'HOST': DB_HOST,
             # 'PORT': '5432',
             # 'NAME': 'aluxmadq',
             # 'USER': 'aluxmadq',
             # 'PASSWORD': 'tszRA7jrY1Oy5n1egvzkCXcCgoR7DSSl',
             # 'HOST': 'satao.db.elephantsql.com',
-            # 'PORT': '5432',
-            # 'NAME': 'personal',
-            # 'USER': 'postgres',
-            # 'PASSWORD': 'docker',
-            # 'HOST': 'host.docker.internal',
-            'PORT': DB_PORT,
+            'PORT': '5432',
+            'NAME': 'test2',
+            'USER': 'postgres',
+            'PASSWORD': 'docker',
+            'HOST': 'host.docker.internal',
+            # 'PORT': DB_PORT,
         }
     }
 

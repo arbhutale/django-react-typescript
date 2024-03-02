@@ -12,7 +12,7 @@ DEBUG = True
 # USE_X_FORWARDED_PORT = True
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CSRF_TRUSTED_ORIGINS = ['http://146.190.13.3/', 'http://24.144.92.69/', 'http://24.144.92.69:80', 'http://24.144.92.69', '24.144.92.69', '24.144.92.69:80', '146.190.13.3', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
+CSRF_TRUSTED_ORIGINS = ['http://103.235.106.28/', 'http://24.144.92.69/', 'http://24.144.92.69:80', 'http://24.144.92.69', '24.144.92.69', '24.144.92.69:80', '103.235.106.28', 'http://146.190.113.62', 'http://localhost', 'http://localhost:3001/']
 
 # Sentry 
 
